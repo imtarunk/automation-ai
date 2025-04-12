@@ -8,7 +8,7 @@ const Navbar = async (props: Props) => {
   return (
     <header className="flex items-center fixed right-0 top-0  w-full  justify-between px-4 py-4 bg-black/40 backdrop-blur-lg border-neutral-900 border-b-[1px] z-[100]">
       <aside className="flex items-center gap-[2px]">
-        <p className="text-3xl font-bold ">Tu</p>
+        <p className="text-3xl font-bold ">Lu</p>
         <Image
           src="/FuzzieLogo.png"
           alt="logo"
@@ -16,7 +16,7 @@ const Navbar = async (props: Props) => {
           height={15}
           className="shadow-sm"
         />
-        <p className="text-3xl font-bold">Kizt</p>
+        <p className="text-3xl font-bold">miX</p>
       </aside>
       <nav className="absolute left-[50%]  top-[50%] transform translate-x-[-50%] translate-y-[-50%] hidden md:block">
         <ul className="flex items-center gap-4 list-none text-white">

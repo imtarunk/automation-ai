@@ -8,9 +8,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { div, ul } from "framer-motion/client";
+import { Separator } from "@/components/ui/separator";
+
 import { menuOptions } from "@/lib/constant";
 import clsx from "clsx";
+import { Database, GitBranch, LucideMousePointerClick } from "lucide-react";
+import { ModeToggle } from "../global/modelToggle";
 
 type Props = {};
 
@@ -26,7 +29,8 @@ const MenuOption = (props: Props) => {
           {menuOptions.map((option) => (
             <ul key={option.name}>
               <Tooltip delayDuration={0}>
-                <TooltipTrigger>
+                {/* ✅ TooltipTrigger should wrap the icon/link only */}
+                <TooltipTrigger asChild>
                   <li>
                     <Link
                       href={option.href}
@@ -42,10 +46,41 @@ const MenuOption = (props: Props) => {
                     </Link>
                   </li>
                 </TooltipTrigger>
+                {/* ✅ TooltipContent should be separate and outside Trigger */}
+                <TooltipContent side="right">
+                  <p className=" font-medium border-1 p-1 rounded-md">
+                    {option.name}
+                  </p>
+                </TooltipContent>
               </Tooltip>
             </ul>
           ))}
         </TooltipProvider>
+        <Separator className="w-full bg-neutral-900" />
+        <div className="flex items-center flex-col gap-9 dark:bg-[#353346]/30 py-4 px-2 rounded-full h-56 overflow-scroll border border-[#353346]">
+          <div className="relative dark:bg-[#353346]/70 p-2 rounded-full border border-[#353346] dark:border-t-2 dark:border-t-[#353346]">
+            <LucideMousePointerClick className="dark:text-white" size={18} />
+            <div className="border-l-2 border-muted-foreground h-6 absolute left-1/2 transform -translate-x-1/2 -bottom-[30px]" />
+          </div>
+          <div className="relative dark:bg-[#353346]/70 p-2 rounded-full border border-[#353346] dark:border-t-2 dark:border-t-[#353346]">
+            <GitBranch className="text-muted-foreground" size={18} />
+            <div className="border-l-2 border-muted-foreground h-6 absolute left-1/2 transform -translate-x-1/2 -bottom-[30px]" />
+          </div>
+          <div className="relative dark:bg-[#353346]/70 p-2 rounded-full border border-[#353346] dark:border-t-2 dark:border-t-[#353346]">
+            <Database className="text-muted-foreground" size={18} />
+            <div className="border-l-2 border-muted-foreground h-6 absolute left-1/2 transform -translate-x-1/2 -bottom-[30px]" />
+          </div>
+
+          <div className="relative dark:bg-[#353346]/70 p-2 rounded-full border border-[#353346] dark:border-t-2 dark:border-t-[#353346]">
+            <GitBranch className="text-muted-foreground" size={18} />
+          </div>
+        </div>
+      </div>
+      {/* section -  */}
+      <div className="flex items-center justify-center flex-col gap-8">
+        <div className="flex items-center justify-center flex-col gap-2">
+          <ModeToggle />
+        </div>
       </div>
     </nav>
   );

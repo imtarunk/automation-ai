@@ -28,7 +28,7 @@ export const getFileMetaData = async () => {
 
   // Get the OAuth token from the user's metadata
   const session = await auth();
-  const oauthToken = await session.getToken({ template: "oauth_google" });
+  const oauthToken = await session.getToken({ template: "google" });
 
   if (!oauthToken) {
     return { message: "No OAuth token found" };

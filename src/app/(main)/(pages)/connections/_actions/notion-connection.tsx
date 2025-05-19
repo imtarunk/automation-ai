@@ -79,27 +79,35 @@ export const onCreateNewPageInDatabase = async (
   accessToken: string,
   content: string
 ) => {
+  if (!databaseId) {
+    throw new Error("Database ID is required");
+  }
+
   const notion = new Client({
     auth: accessToken,
   });
 
-  console.log(databaseId);
-  const response = await notion.pages.create({
-    parent: {
-      type: "database_id",
-      database_id: databaseId,
-    },
-    properties: {
-      name: [
-        {
-          text: {
-            content: content,
+  try {
+    const response = await notion.pages.create({
+      parent: {
+        type: "database_id",
+        database_id: databaseId,
+      },
+      properties: {
+        name: [
+          {
+            text: {
+              content: content,
+            },
           },
-        },
-      ],
-    },
-  });
-  if (response) {
+        ],
+      },
+    });
     return response;
+  } catch (error: any) {
+    console.error("Error creating Notion page:", error);
+    throw new Error(
+      error.message || "Failed to create page in Notion database"
+    );
   }
 };

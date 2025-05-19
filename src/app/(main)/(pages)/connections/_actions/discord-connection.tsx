@@ -15,6 +15,24 @@ export const onDiscordConnect = async (
 ) => {
   //check if webhook id params set
   if (webhook_id) {
+    // First, ensure the user exists
+    const user = await db.user.findUnique({
+      where: {
+        clerkId: id,
+      },
+    });
+
+    if (!user) {
+      // Create the user if it doesn't exist
+      await db.user.create({
+        data: {
+          clerkId: id,
+          email: "", // You might want to get this from Clerk
+          name: "", // You might want to get this from Clerk
+        },
+      });
+    }
+
     //check if webhook exists in database with userid
     const webhook = await db.discordWebhook.findFirst({
       where: {

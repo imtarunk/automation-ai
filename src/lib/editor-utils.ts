@@ -11,6 +11,7 @@ import {
   listBotChannels,
 } from "@/app/(main)/(pages)/connections/_actions/slack-connection";
 import { Option } from "@/components/ui/multiple-selector";
+import { toast } from "sonner";
 
 export const onDragStart = (
   event: any,
@@ -105,21 +106,32 @@ export const onConnections = async (
   if (editorState.editor.selectedNode.data.title == "Notion") {
     const connection = await getNotionConnection();
     if (connection) {
+      if (!connection.databaseId) {
+        toast.error(
+          "No Notion database selected. Please connect a Notion database first."
+        );
+        return;
+      }
       nodeConnection.setNotionNode({
         accessToken: connection.accessToken,
         databaseId: connection.databaseId,
         workspaceName: connection.workspaceName,
-        content: {
-          name: googleFile.name,
-          kind: googleFile.kind,
-          type: googleFile.mimeType,
-        },
+        content: "",
       });
 
-      if (nodeConnection.notionNode.databaseId !== "") {
+      try {
         const response = await getNotionDatabase(
-          nodeConnection.notionNode.databaseId,
-          nodeConnection.notionNode.accessToken
+          connection.databaseId,
+          connection.accessToken
+        );
+        if (!response) {
+          toast.error(
+            "Failed to connect to Notion database. Please check your connection."
+          );
+        }
+      } catch (error) {
+        toast.error(
+          "Failed to connect to Notion database. Please check your connection."
         );
       }
     }

@@ -39,21 +39,29 @@ const ActionButton = ({
   }, [nodeConnection.discordNode]);
 
   const onStoreNotionContent = useCallback(async () => {
-    console.log(
-      nodeConnection.notionNode.databaseId,
-      nodeConnection.notionNode.accessToken,
-      nodeConnection.notionNode.content
-    );
-    const response = await onCreateNewPageInDatabase(
-      nodeConnection.notionNode.databaseId,
-      nodeConnection.notionNode.accessToken,
-      nodeConnection.notionNode.content
-    );
-    if (response) {
-      nodeConnection.setNotionNode((prev: any) => ({
-        ...prev,
-        content: "",
-      }));
+    try {
+      if (!nodeConnection.notionNode.databaseId) {
+        toast.error(
+          "No Notion database selected. Please connect a Notion database first."
+        );
+        return;
+      }
+
+      const response = await onCreateNewPageInDatabase(
+        nodeConnection.notionNode.databaseId,
+        nodeConnection.notionNode.accessToken,
+        nodeConnection.notionNode.content
+      );
+
+      if (response) {
+        toast.success("Page created successfully in Notion");
+        nodeConnection.setNotionNode((prev: any) => ({
+          ...prev,
+          content: "",
+        }));
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create page in Notion");
     }
   }, [nodeConnection.notionNode]);
 
@@ -102,8 +110,15 @@ const ActionButton = ({
     }
 
     if (currentService === "Notion") {
+      if (!nodeConnection.notionNode.databaseId) {
+        toast.error(
+          "No Notion database selected. Please connect a Notion database first."
+        );
+        return;
+      }
+
       const response = await onCreateNodeTemplate(
-        JSON.stringify(nodeConnection.notionNode.content),
+        nodeConnection.notionNode.content,
         currentService,
         pathname.split("/").pop()!,
         [],
@@ -112,7 +127,7 @@ const ActionButton = ({
       );
 
       if (response) {
-        toast.message(response);
+        toast.success(response);
       }
     }
   }, [nodeConnection, channels]);

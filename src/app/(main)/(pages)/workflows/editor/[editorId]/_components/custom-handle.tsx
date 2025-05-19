@@ -1,4 +1,4 @@
-import { useEditor } from "@/providers/editor-provider";
+import { useEditor } from "@/provider/editor-provider";
 import React, { CSSProperties } from "react";
 import { Handle, HandleProps, useStore } from "reactflow";
 

@@ -10,7 +10,7 @@ const Page = (props: Props) => {
     <div className="h-full">
       <EditorProvider>
         <ConnectionsProvider>
-          <EditorCanvas nodes={[]} />
+          <EditorCanvas />
         </ConnectionsProvider>
       </EditorProvider>
     </div>

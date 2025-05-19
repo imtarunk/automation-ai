@@ -1,7 +1,7 @@
 "use client";
 import { EditorCanvasTypes, EditorNodeType } from "@/lib/types";
-import { useNodeConnections } from "@/providers/connections-provider";
-import { useEditor } from "@/providers/editor-provider";
+import { useNodeConnections } from "@/provider/connections-provider";
+import { useEditor } from "@/provider/editor-provider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import React, { useEffect } from "react";
@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/accordion";
 import RenderConnectionAccordion from "./render-connection-accordion";
 import RenderOutputAccordion from "./render-output-accordian";
-import { useFuzzieStore } from "@/src/store";
+import { useFuzzieStore } from "@/store";
 
 type Props = {
   nodes: EditorNodeType[];

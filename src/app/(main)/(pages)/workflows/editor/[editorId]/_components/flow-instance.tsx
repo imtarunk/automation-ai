@@ -21,6 +21,7 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   const { nodeConnection } = useNodeConnections();
 
   const onFlowAutomation = useCallback(async () => {
+    console.log("handle flow automation");
     const flow = await onCreateNodesEdges(
       pathname.split("/").pop()!,
       JSON.stringify(nodes),
@@ -57,10 +58,20 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-3 p-4">
-        <Button onClick={onFlowAutomation} disabled={isFlow.length < 1}>
+        <Button
+          onClick={onFlowAutomation}
+          disabled={isFlow.length < 1}
+          variant="outline"
+          className="bg-gray-500 hover:bg-gray-600 hover:text-white hover:cursor-pointer"
+        >
           Save
         </Button>
-        <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
+        <Button
+          disabled={isFlow.length < 1}
+          onClick={onPublishWorkflow}
+          variant="outline"
+          className="bg-gray-500 hover:bg-gray-600 hover:text-white hover:cursor-pointer"
+        >
           Publish
         </Button>
       </div>

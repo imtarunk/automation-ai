@@ -17,15 +17,17 @@ const ignoredPaths = [
 ];
 
 export default clerkMiddleware((auth, req) => {
-  const path = req.nextUrl.pathname;
-
-  if (publicPaths.includes(path) || ignoredPaths.includes(path)) {
-    return NextResponse.next();
-  }
-
+  if (publicPaths.includes(req.nextUrl.pathname)) return NextResponse.next();
+  if (ignoredPaths.includes(req.nextUrl.pathname)) return NextResponse.next();
   return NextResponse.next();
 });
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
+
+// https://www.googleapis.com/auth/userinfo.email
+// https://www.googleapis.com/auth/userinfo.profile
+// https://www.googleapis.com/auth/drive.activity.readonly
+// https://www.googleapis.com/auth/drive.metadata
+// https://www.googleapis.com/auth/drive.readonly
